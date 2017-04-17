@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><html class="no-js" lang="en"><!--<![endif]-->
+<html ng-app="myApp" class="no-js" lang="en">
+<head>
+<title>CelebFashion - Use your fashion skills to earn rewards.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" type="text/css"	href="assets/style.css">
+	<link rel="stylesheet" type="text/css"	href="assets/bootstrap.css">
+</head>
+<body ng-controller="homeCtrl">
+<div class="col-md-12">
+	<div class="col-md-9 boot_col">
+	<div class="col-md-12 boot_col">
+		<div class="quiz_container ques{{$index}} wow slideInRight"
+			id="ques{{$index}}" style="display: none;" data-wow-duration="1s"
+			data-wow-delay=".1s"
+			ng-repeat="q in Quiz.questions track by $index">			
+			<div class="question_section">
+				<h2>{{q.question}}</h2>
+				<div class="radio_select" ng-repeat="ans in q.options">
+					<input id="radio-level{{q.id}}{{ans.id}}" class="radio-custom"
+						name="checkbox{{q.id}}" ng-value="ans.id" ng-model="q.userAnswer"
+						type="radio"> <label for="radio-level{{q.id}}{{ans.id}}"
+						class="radio-custom-label show_link_text">{{ans.text}}</label>
+				</div>
+				<div class="btn btn-primary" id="next_btn{{$index}}"
+					ng-click="nextQuestion($index)">NEXT</div>
+					
+				<!-- ng-click="loadFullImage(q.URL);"  -->
+			</div>
+		</div>
+		</div>
+		
+	</div>
+	<div class="col-md-3 button_container">
+	<div class="col-md-12"><div class="btn btn-primary" ng-click="showQuestion($index)" ng-repeat="q in Quiz.questions track by $index">{{$index+1}}</div>
+	</div>
+	<div class="col-md-12">
+	<button class="btn btn-success" ng-click="saveTextAsFile()">Submit</button>
+	<button class="btn btn-danger" ng-click="">Reset</button>
+	</div>
+	</div>
+	</div>
+	<script src="scripts/angular/angular.min.js"></script>
+	<script src="scripts/angular/angular-sanitize.min.js"></script>
+	<script src="scripts/angular/angular-route.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery.min.js"></script>
+	<script type="text/javascript" src="scripts/questions.js"></script>
+	<script type="text/javascript" src="scripts/app.js"></script>
+	<script type="text/javascript" src="scripts/wow.js"></script>
+	<script src="scripts/controller/homeCtrl.js"></script>
+	<script>
+</script>
+</body>
+</html>

@@ -58,28 +58,46 @@ myApp.controller("homeCtrl", function($scope, $location, $window,$http) {
 	};
 	$scope.saveTextAsFile=function()
 	{
+		/* var ie = navigator.userAgent.match(/MSIE\s([\d.]+)/),
+		  ie11 = navigator.userAgent.match(/Trident\/7.0/) && navigator.userAgent.match(/rv:11/),
+		  ieEDGE = navigator.userAgent.match(/Edge/g),
+		  ieVer=(ie ? ie[1] : (ie11 ? 11 : (ieEDGE ? 12 : -1)));
+
+		  if (ie && ieVer<10) {
+			console.log("No blobs on IE ver<10");
+			return;
+		  }*/
+
 		var textToWrite = JSON.stringify($scope.Quiz);;
 		var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
 		var fileNameToSaveAs = "output.dat";
-		  var downloadLink = document.createElement("a");
-		downloadLink.download = fileNameToSaveAs;
-		downloadLink.innerHTML = "Download File";
-		if (window.webkitURL != null)
-		{
-			// Chrome allows the link to be clicked
-			// without actually adding it to the DOM.
-			downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+		
+		if(navigator.msSaveBlob){
+			window.navigator.msSaveBlob(textFileAsBlob, fileNameToSaveAs);
 		}
-		else
-		{
-			// Firefox requires the link to be added to the DOM
-			// before it can be clicked.
-			downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-			downloadLink.onclick = destroyClickedElement;
-			downloadLink.style.display = "none";
-			document.body.appendChild(downloadLink);
-		}
+		else {
+			  var downloadLink = document.createElement("a");
+			downloadLink.download = fileNameToSaveAs;
+			downloadLink.innerHTML = "Download File";
+		//console.log(ie);
+			if (window.webkitURL != null)
+			{
+				// Chrome allows the link to be clicked
+				// without actually adding it to the DOM.
+				downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+			}
+			else
+			{
+				// Firefox requires the link to be added to the DOM
+				// before it can be clicked.
+				downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+				
+				downloadLink.onclick = destroyClickedElement;
+				downloadLink.style.display = "none";
+				document.body.appendChild(downloadLink);
+			}
 
-		downloadLink.click();
+			downloadLink.click();
+		}
 	};
 });
